@@ -389,9 +389,226 @@ select * from 表名 where score is null;
 
 #### 二.排序
 
+##### 1.单列排序
+
+```mysql
+ select 字段名 from 表名 [where 条件] order by 字段名 [asc|desc];
+ -- 默认是升序asc
+```
+
+##### 2.组合排序
+
+```mysql
+ select 字段名 from 表名 [where 条件] order by 字段名1 [asc|desc],字段名2 [asc|desc];
+```
 
 
 
+#### 三.单行函数
+
+计算一行中的数据
+
+##### 1.数值函数
+
+```mysql
+-- 返回x的绝对值
+select abs(x);
+
+-- 返回大于或等于x的最小整数(向上取整)
+select ceil(x);
+
+-- 返回小于或等于x的最大整数(向下取整)
+select floor(x);
+
+-- 返回0~1之间的随机数
+select rand();
+
+-- 返回离x最近的整数(四舍五入)
+select roudn(x);
+```
+
+
+
+##### 2.字符串函数
+
+```mysql
+-- 拼接函数,合并成一个字符串
+select concat(s1,s2,s3,s4);
+
+-- 查询子字符串的开始位置,从s中获取sub的开始位置
+-- 谁,在哪里查
+select locate(sub,s);
+
+-- 转成小写
+select lower(s);
+
+-- 转成大写
+select upper(s);
+
+-- 替换,在哪里换,换谁,用谁换
+select replace(s,s1,s2);
+
+-- 截取一段子字符串,从s中的star位置开始截取一段长为length的字符串,从1开始算起
+select substr(s,star,lenth);
+
+-- 去空格,去掉s头尾的空格
+select trim(s);
+
+-- 反转字符串
+select reverse(s);
+```
+
+
+
+##### 3.时间日期函数
+
+```mysql
+-- 返回系统当前时间,年月日时分秒
+select now();
+
+-- 返回系统当前时间,年月日时分秒
+select sysdate();
+select now(),sysdate(),sleep(5),now(),sysdate();
+/*
+now():一次,以后每一次都一样
+sysdate():每一次都不一样
+*/
+
+-- 返回当前日期(年月日)
+select curdate();
+
+-- 返回当前日期(时分秒)
+select curtime();
+
+-- 返回参数日期中的月分值
+select month("2021-12-12");
+
+-- 返回参数日期是一年中的第几周
+select week("2021-12-12");
+
+-- 返回参数日期中的日值
+select day("2021-12-12");
+
+-- 在参数日期上增加相应的时间--重要
+select date_add(date,INTERVAL expr type);
+select date_add('2021-4-22 14:15:16',INTERVAL 3 YEAR);
+/*
+date参数是合法的日期表达式,expr 参数是希望添加的时间间隔
+type可以是:MICROSECOND,SECOND,MINUTE,HOUR,DAY,WEEK,MONTH,QUARTER,YEAR,SECOND_MICROSECOND,MINUTE_MICROSECOND,MINUTE_SECOND,HOUR_MICROSECOND,HOUR_SECOND,HOUR_MINUTE...
+*/
+```
+
+
+
+##### 4.流程控制函数
+
+```mysql
+-- 三目函数,condition为true时返回expr1,否则返回expr2
+select if (condition,expr1,expr2);
+
+-- 判空函数,expr1不为空时返回expr1,否则返回expr2
+select ifnull(expr1,expr2);
+select math,english,math+ifnull(english,0) as '总成绩' from student;
+```
+
+
+
+##### 5.其他函数
+
+```mysql
+-- 查看当前数据库版本
+select version();
+
+-- 查看当前用户
+select user();
+
+-- md5加密
+select md5();
+```
+
+
+
+
+
+#### 四.聚合函数
+
+计算一列当中的数据,并返回一个结果值,聚合函数会忽略空值
+
+##### 1.count();
+
+```mysql
+-- 统计指定字段(列)记录数,记录为Null的不统计
+-- 统计表中有多少条记录,也就是有多少行
+select count('name') from student;-- 如果有NUll,则不准确
+select count(*) from student;
+```
+
+
+
+##### 2.sum();
+
+```mysql
+-- 统计指定字段下的数值和,如果不是数值类型,结果为0
+select sum(math) from student; 
+```
+
+
+
+##### 3.avg();
+
+```mysql
+-- 统计指定字段的平均数,如果不是数值类型,结果为0
+select avg(math) from student; 
+```
+
+
+
+##### 4.max();
+
+```mysql
+-- 计算指定字段下的最大值
+select max(math) from student; 
+```
+
+
+
+##### 5.min();
+
+```mysql
+-- 计算指定字段下的最小值
+select min(math) from student; 
+```
+
+
+
+#### 五.分组
+
+使用group by 关键字对查询信息进行分组,符合条件的相同的数据作为一组
+
+怎么分组?字段中内容一样的作为同一组
+
+##### 1.分组查询
+
+```mysql
+-- 字段内容一样的作为同一组
+select 字段一,字段二 from 表名 group by 分组字段[having 条件];
+select * from 表名 group by 分组字段[having 条件];
+```
+
+
+
+##### 2.分组的条件过滤
+
+```mysql
+```
+
+
+
+##### 3.where 与 having 的对比
+
+```mysql
+-- 
+```
 
 
 
