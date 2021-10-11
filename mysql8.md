@@ -591,8 +591,11 @@ select min(math) from student;
 
 ```mysql
 -- 字段内容一样的作为同一组
+-- 使用group by 进行分组时,mysql8 会报错,需要相应处理
 select 字段一,字段二 from 表名 group by 分组字段[having 条件];
-select * from 表名 group by 分组字段[having 条件];
+
+
+
 ```
 
 
@@ -600,6 +603,7 @@ select * from 表名 group by 分组字段[having 条件];
 ##### 2.分组的条件过滤
 
 ```mysql
+select * from 表名 group by 分组字段 [having 条件];
 ```
 
 
@@ -607,7 +611,23 @@ select * from 表名 group by 分组字段[having 条件];
 ##### 3.where 与 having 的对比
 
 ```mysql
--- 
+-- where 后面不能跟聚合函数,having 可以跟
+select math,count(*) from student where age>18 group by math having count(*)>2; 
+```
+
+
+
+#### 六.limit
+
+应用场景,网页中每页显示的条数(商品数量)
+
+```mysql
+-- 限制.限制每次查询记录的条数
+select * 字段列表 from [where 条件] [group by 字段] [having 条件] [order by asc|desc] [limit offest,length];
+-- limit offset,length 或者 limit length;
+
+select * from student limit 2,6;
+-- 省略前面两条,从第3条开始显示,共显示6条.第一个参数省略时,表示从第一条开始显示.
 ```
 
 
