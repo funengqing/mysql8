@@ -235,7 +235,7 @@ insert into 表名 (字段１,字段２,字段３) value (值１,值２,值３);
 
 /*
 
-字段中如果有自增的,最好写上,不费事;
+字段中如果有自增的,最好写上,不费事,但容易出错(事),可以指定要插入的字段和值,与上面的一样;
 字段与值和类型要一一对应;
 除了数值类型外,其他字段类型的值必须使用引号(建议单引号)包起来
 如果要插入空值,可以不写字段,或者插入null;
@@ -710,11 +710,27 @@ create table student(
 	id int primary key,
     name varchar(20) not null
 );
+
+-- 建表后修改
+alter table student modify name varchar(20) not null;
 ```
 
 
 
 #### 三.唯一约束
+
+添加后该字段的值不能重复,但可以为Null,Null代表不存在,无法比较,也就无所谓重复不重复了,也就是说该字段可以全部为Null
+
+```mysql
+-- 建表时声明
+create table student(
+	id int primary key,
+    name varchar(20) not null,
+    email varchar(20) unique
+);
+```
+
+
 
 #### 四.默认约束
 
