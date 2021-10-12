@@ -768,6 +768,14 @@ alter table student change column address address varchar(200) default null;
 
 副表:使用别人的数据,被约束的表
 
+```mysql
+-- 建表后新增
+ALTER TABLE employee ADD CONSTRAINT emp_ref_dep_kf FOREIGN key (dept_id) REFERENCES department (id);
+
+```
+
+
+
 
 
 ## 注释方式有三种
