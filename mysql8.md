@@ -593,9 +593,6 @@ select min(math) from student;
 -- 字段内容一样的作为同一组
 -- 使用group by 进行分组时,mysql8 会报错,需要相应处理
 select 字段一,字段二 from 表名 group by 分组字段[having 条件];
-
-
-
 ```
 
 
@@ -623,12 +620,34 @@ select math,count(*) from student where age>18 group by math having count(*)>2;
 
 ```mysql
 -- 限制.限制每次查询记录的条数
-select * 字段列表 from [where 条件] [group by 字段] [having 条件] [order by asc|desc] [limit offest,length];
+select 字段 from 表名 [where 条件] [group by 字段] [having 条件] [order by asc|desc] [limit offest,length];
 -- limit offset,length 或者 limit length;
 
 select * from student limit 2,6;
 -- 省略前面两条,从第3条开始显示,共显示6条.第一个参数省略时,表示从第一条开始显示.
 ```
+
+#### 七.select 语句总结
+
+##### 1.书写顺序
+
+select 字段 from 表名 where 条件 group by 字段 having 条件 order by 字段 limit 参数
+
+其中,select 字段,from表名为必写的,其余均可视实际情况而定.
+
+
+
+##### 2.执行顺序
+
+1. from 表名
+2. where 条件
+3. group by 字段
+4. having 条件
+5. select 字段
+6. order by 字段
+7. limit 参数
+
+
 
 
 
