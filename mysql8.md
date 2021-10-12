@@ -728,6 +728,12 @@ create table student(
     name varchar(20) not null,
     email varchar(20) unique
 );
+
+-- 建表后修改
+alter table student add constraint [约束名] unique(字段); 
+
+-- 删除唯一约束
+alter table student drop index 约束名
 ```
 
 
