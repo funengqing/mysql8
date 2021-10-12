@@ -740,7 +740,33 @@ alter table student drop index 约束名
 
 #### 四.默认约束
 
+预设默认值
+
+```mysql
+-- 建表时声明
+create table student(
+	id int primary key,
+    name varchar(20) not null,
+    email varchar(20) unique,
+    address varchar(200) default "广东"
+);
+
+-- 建表后修改
+alter table student change column address address varchar(200) default "广东"; 
+
+-- 删除唯一约束,其实是改变内容
+alter table student change column address address varchar(200) default null;
+```
+
+
+
 #### 五.外键约束
+
+主要用于表与表之间的关系,比较重要.一张表中的某个字段引用另一个表的主键.
+
+主表:约事别的表
+
+副表:使用别人的数据,被约束的表
 
 
 
