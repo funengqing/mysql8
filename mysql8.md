@@ -776,6 +776,49 @@ ALTER TABLE employee ADD CONSTRAINT emp_ref_dep_kf FOREIGN key (dept_id) REFEREN
 
 
 
+### 多表查询
+
+```mysql
+-- 会产生笛卡尔现象,产生很错错误和无意义的现在
+SELECT * FROM emp,dept;
+
+-- 其中一种方式来避免笛卡尔现象
+SELECT emp.`name` as 姓名,dept.`name` as 部门 FROM emp,dept WHERE emp.deptId=dept.id;
+
+# 多表查询之内连接第一隐式内连接,不使用join关键字,用where条件指定
+#SELECT 字段名 FROM 左表,右表 WHERE 条件;
+SELECT emp.`name` as 姓名,dept.`name` as 部门 FROM emp,dept WHERE emp.deptId=dept.id;
+SELECT e.`name` as 姓名,d.`name` as 部门 FROM emp AS e,dept AS d WHERE e.deptId=d.id AND e.`name` = '杨小玲';
+
+# 多表查询之内连接第二显式内连接,使用INNER JOIN 关键字,使用INNER可以省略
+# SELECT 字段名 FROM 左表 INNER JOIN 右表 ON 条件;
+SELECT e.`name` 姓名,d.`name` 部门名称 FROM emp e INNER JOIN dept d ON e.deptId = d.id;
+
+# 多表查询之外连接第一左外连接
+# 使用LEFT OUTER JOIN ... ON,OUTER是可以省略的,左表数据全部显示,右表显示和左表有关联的数据
+# SELECT 字段名 FROM 左表 LEFT OUTER JOIN 右表 ON 条件;
+#左右表顺序不一样,结果可能不一样,左表是会全部显示,这与内连接不一样,内连接只要条件符合就显示
+SELECT * FROM emp e LEFT JOIN dept d ON e.deptId = d.id;
+SELECT e.`name` 姓名,d.`name` 部门名称 FROM dept d LEFT JOIN emp e ON d.id = e.deptId;
+SELECT e.`name` 姓名,d.`name` 部门名称 FROM emp e LEFT JOIN dept d ON e.deptId = d.id;
+
+
+# 多表查询之外连接第二右外内连接
+SELECT * FROM dept d RIGHT JOIN emp e ON e.deptId = d.id;
+SELECT e.`name` 姓名,d.`name` 部门名称 FROM dept d RIGHT JOIN emp e ON d.id = e.deptId;
+SELECT e.`name` 姓名,d.`name` 部门名称 FROM emp e RIGHT JOIN dept d ON e.deptId = d.id;
+
+# 子查询
+# 一条select 语句的查询结果作为另一条select语句的一部分
+# SELECT 字段 FROM 表 WHERE 字段 运算符(select 字段 from 表);
+#子查询在主查询之前执行一次,其结果被用于主查询
+# 单行子查询:子查询结果是一个值,单行运算符:>,<,=,>=,<=,!=,<>
+SELECT * FROM emp WHERE emp.salary = (SELECT MAX(emp.salary) FROM emp);
+SELECT * FROM emp WHERE emp.salary > (SELECT emp.salary FROM emp WHERE emp.`name`='李诗诗')
+
+# 多行子查询:子查询结果是单例多行,多行运算符:in all any
+```
+
 
 
 ## 注释方式有三种
