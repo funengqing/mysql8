@@ -812,11 +812,16 @@ SELECT e.`name` 姓名,d.`name` 部门名称 FROM emp e RIGHT JOIN dept d ON e.d
 # 一条select 语句的查询结果作为另一条select语句的一部分
 # SELECT 字段 FROM 表 WHERE 字段 运算符(select 字段 from 表);
 #子查询在主查询之前执行一次,其结果被用于主查询
-# 单行子查询:子查询结果是一个值,单行运算符:>,<,=,>=,<=,!=,<>
+# 单行子查询:子查询结果只有一个字段,是一个值,单行运算符:>,<,=,>=,<=,!=,<>
 SELECT * FROM emp WHERE emp.salary = (SELECT MAX(emp.salary) FROM emp);
 SELECT * FROM emp WHERE emp.salary > (SELECT emp.salary FROM emp WHERE emp.`name`='李诗诗')
 
 # 多行子查询:子查询结果是单例多行,多行运算符:in all any
+
+# 多例(多字段)
+# 当作多表来查询,因为子查询返回的是多字段(多例),可以当作一张表,给子查询返回的表一个别名,就可以当表来用
+# select * from 表1,(子查询结果表) 别名 where 条件;
+SELECT * FROM emp WHERE emp.salary = (SELECT MAX(emp.salary) FROM emp);
 ```
 
 
